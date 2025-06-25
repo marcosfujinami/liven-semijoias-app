@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - CRM Semijoias</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f8f9fa; color: #343a40; display: flex; flex-direction: column; min-height: 100vh; }
+        header { background-color: #343a40; color: #ffffff; padding: 1rem 0; text-align: center; width: 100%; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 1.8rem; }
+        nav ul { list-style-type: none; padding: 0; text-align: center; margin-top: 0.5rem; }
+        nav ul li { display: inline; margin: 0 15px; }
+        nav ul li a { color: #ffffff; text-decoration: none; font-weight: 500; font-size: 0.95rem; }
+        nav ul li a:hover { color: #adb5bd; }
+        .container { flex: 1; width: 90%; max-width: 1200px; margin: 30px auto; background-color: #ffffff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 25px; }
+        .stat-card { background-color: #f1f3f5; padding: 25px; border-radius: 8px; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .stat-card:hover { transform: translateY(-5px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .stat-card h3 { margin-top: 0; color: #495057; font-size: 1.1rem; }
+        .stat-card p { font-size: 2.2rem; color: #212529; margin-bottom: 0; font-weight: 600; }
+        h2 { color: #343a40; border-bottom: 2px solid #dee2e6; padding-bottom: 15px; font-size: 1.5rem; }
+        .quick-access { margin-top: 35px; }
+        .quick-access ul { list-style-type: none; padding: 0; display: flex; flex-wrap: wrap; gap: 15px; }
+        .quick-access ul li a { display: block; text-decoration: none; background-color: #007bff; color: white; padding: 12px 18px; border-radius: 5px; font-weight: 500; transition: background-color 0.2s ease; text-align: center; }
+        .quick-access ul li a:hover { background-color: #0056b3; }
+        footer { background-color: #343a40; color: #ffffff; text-align: center; padding: 1.2rem 0; width: 100%; margin-top: auto; font-size: 0.9rem;}
+        footer p { margin: 0; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>CRM Semijoias</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li><a href="{% url 'admin:index' %}">Admin Console</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h2>{{ welcome_message }}</h2>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Novos Clientes (Últ. 7 dias)</h3>
+                <p>{{ new_customers_count }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Vendas Recentes (Últ. 7 dias)</h3>
+                <p>{{ recent_sales_count }}</p>
+            </div>
+            <div class="stat-card">
+                <h3>Produtos Baixo Estoque</h3>
+                <p>{{ low_stock_products_count }}</p>
+            </div>
+        </div>
+
+        <div class="quick-access">
+            <h3>Acesso Rápido (Admin)</h3>
+            <ul>
+                <li><a href="{% url 'admin:products_product_changelist' %}">Gerenciar Produtos</a></li>
+                <li><a href="{% url 'admin:customers_customer_changelist' %}">Gerenciar Clientes</a></li>
+                <li><a href="{% url 'admin:sales_sale_changelist' %}">Histórico de Vendas</a></li>
+                <li><a href="{% url 'admin:inventory_inventory_changelist' %}">Consultar Estoque</a></li>
+                <li><a href="{% url 'admin:collections_collection_changelist' %}">Gerenciar Coleções</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; {% now "Y" %} Sua Loja de Semijoias. Todos os direitos reservados.</p>
+    </footer>
+</body>
+</html>

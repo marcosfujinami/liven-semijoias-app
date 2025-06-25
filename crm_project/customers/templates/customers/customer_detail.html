@@ -1,0 +1,42 @@
+{% extends "customers/base_customers.html" %}
+
+{% block title %}{{ customer.full_name }}{% endblock %}
+
+{% block breadcrumb_items %}
+    <li class="breadcrumb-item"><a href="{% url 'customers:customer_list' %}">Clientes</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ customer.full_name }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>{{ customer.full_name }}</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Informações Pessoais</h4>
+                <p><strong>CPF:</strong> {{ customer.cpf }}</p>
+                <p><strong>Email:</strong> {{ customer.email }}</p>
+                <p><strong>Telefone:</strong> {{ customer.phone|default:"Não informado" }}</p>
+            </div>
+            <div class="col-md-6">
+                <h4>Endereço</h4>
+                <p>{{ customer.address_street|default:"" }}{% if customer.address_number %}, {{ customer.address_number }}{% endif %}</p>
+                <p>{{ customer.address_complement|default:"" }}</p>
+                <p>{{ customer.address_neighborhood|default:"" }}</p>
+                <p>{{ customer.address_city|default:"" }}{% if customer.address_state %} - {{ customer.address_state }}{% endif %}</p>
+                <p><strong>CEP:</strong> {{ customer.address_zip_code|default:"Não informado" }}</p>
+            </div>
+        </div>
+        <hr>
+        <p><em>Cliente desde: {{ customer.created_at|date:"d/m/Y H:i" }}</em></p>
+        <p><em>Última atualização: {{ customer.updated_at|date:"d/m/Y H:i" }}</em></p>
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'customers:customer_update' customer.pk %}" class="btn btn-secondary">Editar Cliente</a>
+        <a href="{% url 'customers:customer_delete' customer.pk %}" class="btn btn-danger">Excluir Cliente</a>
+        <a href="{% url 'customers:customer_list' %}" class="btn btn-outline-secondary">Voltar para Lista</a>
+    </div>
+</div>
+{% endblock %}

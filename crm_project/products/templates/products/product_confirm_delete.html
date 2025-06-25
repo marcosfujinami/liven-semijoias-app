@@ -1,0 +1,22 @@
+{% extends "products/base_products.html" %}
+
+{% block title %}Confirmar Exclusão de Produto{% endblock %}
+
+{% block breadcrumb_items %}
+    <li class="breadcrumb-item"><a href="{% url 'products:product_list' %}">Produtos</a></li>
+    <li class="breadcrumb-item"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Confirmar Exclusão</li>
+{% endblock %}
+
+{% block content %}
+<h2>Confirmar Exclusão</h2>
+<div class="alert alert-danger">
+    <p>Você tem certeza que quer excluir o produto <strong>"{{ product.name }}"</strong>?</p>
+    <p>Esta ação não pode ser desfeita.</p>
+</div>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sim, Excluir Produto</button>
+    <a href="{{ product.get_absolute_url }}" class="btn btn-outline-secondary">Cancelar</a>
+</form>
+{% endblock %}

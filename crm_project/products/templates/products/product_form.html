@@ -1,0 +1,23 @@
+{% extends "products/base_products.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}{{ form_title }}{% endblock %}
+
+{% block breadcrumb_items %}
+    <li class="breadcrumb-item"><a href="{% url 'products:product_list' %}">Produtos</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ form_title }}</li>
+{% endblock %}
+
+{% block content %}
+<h2>{{ form_title }}</h2>
+<div class="card">
+    <div class="card-body">
+        <form method="post" enctype="multipart/form-data"> {# enctype for potential file uploads later #}
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-success">Salvar Produto</button>
+            <a href="{% url 'products:product_list' %}" class="btn btn-outline-secondary">Cancelar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "suppliers/base_suppliers.html" %}
+
+{% block title %}{{ supplier.name }}{% endblock %}
+
+{% block breadcrumb_items %}
+    <li class="breadcrumb-item"><a href="{% url 'suppliers:supplier_list' %}">Fornecedores</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{ supplier.name }}</li>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>{{ supplier.name }}</h2>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <h4>Informações do Fornecedor</h4>
+                <p><strong>CNPJ:</strong> {{ supplier.cnpj }}</p>
+                <p><strong>Email:</strong> {{ supplier.email|default:"Não informado" }}</p>
+                <p><strong>Telefone:</strong> {{ supplier.phone|default:"Não informado" }}</p>
+                <p><strong>Pessoa de Contato:</strong> {{ supplier.contact_person|default:"Não informado" }}</p>
+            </div>
+            <div class="col-md-6">
+                <h4>Endereço</h4>
+                <p>{{ supplier.address_street|default:"" }}{% if supplier.address_number %}, {{ supplier.address_number }}{% endif %}</p>
+                <p>{{ supplier.address_complement|default:"" }}</p>
+                <p>{{ supplier.address_neighborhood|default:"" }}</p>
+                <p>{{ supplier.address_city|default:"" }}{% if supplier.address_state %} - {{ supplier.address_state }}{% endif %}</p>
+                <p><strong>CEP:</strong> {{ supplier.address_zip_code|default:"Não informado" }}</p>
+            </div>
+        </div>
+        {% if supplier.observations %}
+        <hr>
+        <h4>Observações</h4>
+        <p>{{ supplier.observations|linebreaksbr }}</p>
+        {% endif %}
+        <hr>
+        <p><em>Fornecedor desde: {{ supplier.created_at|date:"d/m/Y H:i" }}</em></p>
+        <p><em>Última atualização: {{ supplier.updated_at|date:"d/m/Y H:i" }}</em></p>
+    </div>
+    <div class="card-footer">
+        <a href="{% url 'suppliers:supplier_update' supplier.pk %}" class="btn btn-secondary">Editar Fornecedor</a>
+        <a href="{% url 'suppliers:supplier_delete' supplier.pk %}" class="btn btn-danger">Excluir Fornecedor</a>
+        <a href="{% url 'suppliers:supplier_list' %}" class="btn btn-outline-secondary">Voltar para Lista</a>
+    </div>
+</div>
+{% endblock %}
